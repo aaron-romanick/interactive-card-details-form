@@ -13,6 +13,124 @@
     <title>Interactive Card Details Form</title>
   </head>
   <body>
+    <main>
+      <div class="site-container">
+        <div class="view-container | letter-spacing-wide uppercase">
+          <div class="view-front">
+            <div
+              class="view-number"
+              data-pad-direction="right"
+              data-pad-length="19"
+            ></div>
+            <div
+              class="view-name"
+              data-placeholder="Jane Appleseed"
+            ></div>
+            <div
+              class="view-exp-date view-exp-month"
+              data-pad-direction="left"
+              data-pad-length="2"
+            ></div><div
+            class="view-exp-date view-exp-slash">/</div><div
+              class="view-exp-date view-exp-year"
+              data-pad-direction="left"
+              data-pad-length="2"
+            ></div>
+          </div>
+          <div class="view-back">
+            <div
+              class="view-cvc | letter-spacing-wide"
+              data-pad-direction="right"
+              data-pad-length="3"
+            ></div>
+          </div>
+        </div>
+        <div class="interaction-container | flow">
+          <div class="form-container | flow">
+            <div class="form-control">
+              <label
+                class="form-label | letter-spacing-wide uppercase"
+                for="input-name"
+              >Cardholder Name</label>
+              <input
+                class="form-input"
+                id="input-name"
+                placeholder="e.g. Jane Appleseed"
+                required
+                type="text"
+              >
+              <p class="error-message"></p>
+            </div>
+            <div class="form-control">
+              <label
+                class="form-label | letter-spacing-wide uppercase"
+                for="input-number-mask"
+              >Card Number</label>
+              <input
+                class="form-input"
+                data-validation-schema='["card"]'
+                id="input-number"
+                placeholder="e.g. 1234 5678 9123 0000"
+                required
+                type="tel"
+              >
+              <p class="error-message"></p>
+            </div>
+            <div class="form-control">
+              <label
+                class="form-label | letter-spacing-wide uppercase"
+                for="input-exp-month"
+              >Exp. Date (MM/YY)</label>
+              <input
+                class="form-input"
+                data-validation-schema='["month"]'
+                data-variation="half-width"
+                id="input-exp-month"
+                maxlength="2"
+                placeholder="MM"
+                required
+                type="tel"
+              >
+              <input
+                class="form-input"
+                data-validation-schema='["year"]'
+                data-variation="half-width"
+                id="input-exp-year"
+                maxlength="2"
+                placeholder="YY"
+                required
+                type="tel"
+              >
+              <p class="error-message"></p>
+            </div>
+            <div class="form-control">
+              <label
+                class="form-label | letter-spacing-wide uppercase"
+                for="input-cvc"
+              >CVC</label>
+              <input
+                class="form-input"
+                data-validation-schema='["cvc"]'
+                id="input-cvc"
+                maxlength="3"
+                placeholder="e.g. 123"
+                required
+                type="tel"
+              >
+              <p class="error-message"></p>
+            </div>
+          </div>
+          <div
+            class="acknowledgement-container | flow"
+            data-state="is-hidden"
+          >
+            <p class="acknowledgement-title | letter-spacing-wide uppercase">Thank you!</p>
+            <p class="acknowledgement-message">We've added your card details</p>
+          </div>
+          <button class="button button-action">Confirm</button>
+        </div>
+      </div>
+    </main>
     <script type="module" src="/src/main.ts" defer></script>
   </body>
 </html>
