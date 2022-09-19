@@ -1,0 +1,25 @@
+@use '/src/styles/abstracts/mixins/media-queries' as media-queries;
+@use '/src/styles/abstracts/mixins/prefix' as prefix;
+
+html {
+  font-size: var(--ff-base);
+}
+
+body {
+  color: var(--clr-primary-100);
+  font-family: var(--ff-primary);
+  font-size: var(--ff-primary);
+  font-weight: var(--fw-primary);
+}
+
+a {
+  color: currentColor;
+}
+
+button {
+  @include prefix.properties((
+    appearance: none,
+  ), (moz, webkit));
+  border: none;
+  cursor: pointer;
+}

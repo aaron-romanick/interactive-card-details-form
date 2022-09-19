@@ -1,0 +1,26 @@
+$mobile-only: 23.438em;
+$tablet-portrait: 23.439em;
+$tablet-landscape: 71.875em;
+$desktop: 90em;
+
+
+/// Mixin to set media query sizes
+/// @author Timothy Robards
+/// @param {String} $size - Size to target with media query
+@mixin size($size) {
+  @if $size == mobile-only {
+    @media (max-width: $mobile-only) { @content; }
+  } @else if $size == tablet-portrait {
+    @media (min-width: $tablet-portrait) { @content; }
+  } @else if $size == tablet-landscape {
+    @media (min-width: $tablet-landscape) { @content; }
+  } @else if $size == desktop {
+    @media (min-width: $desktop) { @content; }
+  }
+}
+
+/// Mixin to set media query for preferred reduced motion
+/// @author Aaron Romanick
+@mixin prefers-reduced-motion() {
+  @media (prefers-reduced-motion: reduce) { @content; }
+}

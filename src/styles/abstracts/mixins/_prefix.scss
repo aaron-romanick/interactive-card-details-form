@@ -1,0 +1,25 @@
+/// Mixin to prefix several properties at once
+/// @author Kitty Giraudel, Aaron Romanick
+/// @param {Map} $declarations - Declarations to prefix
+/// @param {List} $prefixes (()) - List of prefixes to print
+/// @param {Boolean} $include-standard (true) - Includes standard non-prefixed declaration
+@mixin properties($declarations, $prefixes: (), $include-standard: true) {
+  @each $property, $value in $declarations {
+    @each $prefix in $prefixes {
+      #{'-' + $prefix + '-' + $property}: $value;
+    }
+
+    // Output standard non-prefixed declaration
+    @if $include-standard {
+      #{$property}: $value;
+    }
+  }
+}
+
+/// Mixin to prefix several properties at once
+/// @author Aaron Romanick
+/// @param {String} $animation-name - The name of the animation
+@mixin keyframes-with-webkit($animation-name) {
+    @-webkit-keyframes #{$animation-name} { @content; }
+    @keyframes #{$animation-name} { @content; }
+}

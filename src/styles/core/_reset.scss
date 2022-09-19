@@ -1,0 +1,88 @@
+@use '/src/styles/abstracts/mixins/media-queries' as media-queries;
+@use '/src/styles/abstracts/mixins/prefix' as prefix;
+
+/* Box sizing rules */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* Remove default margin */
+* {
+  margin: 0;
+  padding: 0;
+  font: inherit;
+}
+
+html,
+body {
+  min-height: 100%;
+}
+
+/* Set core root defaults */
+html:where(:focus-within) {
+  scroll-behavior: smooth;
+}
+
+/* Set core body defaults */
+body {
+  height: 100vh;
+  text-rendering: optimizeSpeed;
+  line-height: 1.5;
+}
+
+/* Remove list styles on ul, ol elements , which suggests default styling will be removed */
+ul, ol {
+  &:where([role="list"]) {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+  }
+}
+
+/* A elements that don't have a class get default styles */
+a:where(:not([class])) {
+  text-decoration-skip-ink: auto;
+}
+
+/* Make images easier to work with */
+img,
+picture,
+svg {
+  max-width: 100%;
+  display: block;
+}
+
+/* Inherit fonts for inputs and buttons */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+dialog {
+  background-color: transparent;
+  border: none;
+  overflow: visible;
+  padding: 0;
+}
+
+/* Remove all animations and transitions for people that prefer not to see them */
+@include media-queries.prefers-reduced-motion() {
+  html:where(:focus-within) {
+    scroll-behavior: auto;
+  }
+  
+  *,
+  *::before,
+  *::after {
+    @include prefix.properties((
+      animation-duration: 0.01ms !important,
+      animation-iteration-count: 1 !important,
+      transition-duration: 0.01ms !important,
+      scroll-behavior: auto !important,
+    ), webkit);
+  }
+}

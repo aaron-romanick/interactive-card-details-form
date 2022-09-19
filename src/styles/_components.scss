@@ -1,0 +1,358 @@
+@use '/src/styles/abstracts/mixins/media-queries' as media-queries;
+@use '/src/styles/abstracts/mixins/prefix' as prefix;
+
+.site {
+  &-container {
+    background-color: var(--clr-white);
+    background-image: linear-gradient(var(--clr-white), var(--clr-white)),
+                      url(/images/bg-main-mobile.png);
+    background-position: bottom center, top center;
+    background-repeat: no-repeat;
+    background-size: auto calc(100% - 15rem), cover;
+    display: flex;
+    flex-direction: column;
+    font-size: var(--fs-lg);
+    min-height: 100vh;
+
+    @include media-queries.size(tablet-landscape) {
+      align-items: center;
+      background-image: linear-gradient(var(--clr-white), var(--clr-white)),
+                        url(/images/bg-main-desktop.png);
+      background-position: right center, left center;
+      background-size: calc(50% + 15rem), cover;
+      gap: 35rem;
+      flex-direction: row;
+      justify-content: center;
+    }
+  }
+}
+
+.view {
+  &-container {
+    color: var(--clr-white);
+    height: var(--size-800);
+    margin-inline: auto;
+    position: relative;
+
+    @include media-queries.size(tablet-landscape) {
+      margin-inline: 0;
+      translate: -4rem 0;
+    }
+  }
+
+  &-front,
+  &-back {
+    aspect-ratio: 157 / 286;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: cover;
+    box-shadow: 0 39px var(--size-160) hsl(0, 0%, 0%, 0.125);
+    border-radius: var(--size-20);
+    height: var(--size-400);
+    position: absolute;
+    width: var(--size-720);
+
+    @include media-queries.size(tablet-landscape) {
+      height: var(--size-600);
+      width: 27.938rem;
+    }
+  }
+
+  &-front {
+    align-items: end;
+    background-image: url(/images/bg-card-front.png);
+    display: grid;
+    grid-template-areas:
+      "view-number view-number view-number view-number"
+      "view-name view-exp-month view-exp-slash view-exp-year";
+    grid-template-rows: 3fr 1fr;
+    grid-template-columns: 1fr min-content min-content min-content;
+    left: -10.75rem;
+    padding: var(--size-50);
+    top: 7.875rem;
+    z-index: 1;
+
+    @include media-queries.size(tablet-landscape) {
+      left: 1rem;
+      padding: var(--size-80) var(--size-70);
+      top: -5.5rem;
+    }
+
+    &::before {
+      aspect-ratio: 84 / 47;
+      background-image: url(/images/card-logo.svg);
+      content: "";
+      height: auto;
+      left: 1.25rem;
+      position: absolute;
+      top: 1.25rem;
+      width: var(--size-140);
+
+      @include media-queries.size(tablet-landscape) {
+        left: 1.75rem;
+        width: var(--size-200);
+        top: 2rem;
+      }
+    }
+  }
+
+  &-back {
+    align-items: center;
+    justify-content: end;
+    background-image: url(/images/bg-card-back.png);
+    display: flex;
+    left: -7.25rem;
+    top: 2.2rem;
+
+    @include media-queries.size(tablet-landscape) {
+      left: 5.5rem;
+      top: 12rem;
+    }
+  }
+
+  &-number {
+    grid-area: view-number;
+    
+    @include media-queries.size(tablet-landscape) {
+      font-size: var(--fs-3xl);
+    }
+  }
+
+  &-name,
+  &-exp-date,
+  &-cvc {
+    font-size: var(--fs-2xs);
+
+    @include media-queries.size(tablet-landscape) {
+      font-size: var(--fs-sm);
+    }
+  }
+
+  &-name {
+    align-self: end;
+    grid-area: view-name;
+    margin-inline-end: var(--size-40);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  &-exp-date {
+    align-self: end;
+    text-align: end;
+  }
+
+  &-exp-month {
+    grid-area: view-exp-month;
+  }
+
+  &-exp-slash {
+    grid-area: view-exp-slash;
+  }
+
+  &-exp-year {
+    grid-area: view-exp-year;
+  }
+
+  &-cvc {
+    margin-inline-end: var(--size-90);
+
+    @include media-queries.size(tablet-landscape) {
+      margin-block-start: -0.25rem;
+      margin-inline-end: var(--size-140);
+    }
+  }
+}
+
+.interaction {
+  &-container {
+    padding: var(--size-30) var(--size-60) var(--size-60);
+    margin-inline: auto;
+    max-width: media-queries.$tablet-portrait;
+    width: 100%;
+
+    @include media-queries.size(tablet-landscape) {
+      margin-inline: 0;
+      padding: 0;
+    }
+  }
+}
+
+.form {
+  &-container {
+    --flow-space: var(--size-20);
+
+    align-items: start;
+    display: grid;
+    grid-template-areas:
+      "form-name form-name"
+      "form-number form-number"
+      "form-exp-date form-cvc";
+    grid-template-columns: 50% 50%;
+    margin-bottom: var(--size-30);
+  }
+
+  &-control {
+    display: flex;
+    flex-wrap: wrap;
+
+    &:nth-child(1) {
+      grid-area: form-name;
+    }
+
+    &:nth-child(2) {
+      grid-area: form-number;
+    }
+
+    &:nth-child(3) {
+      margin-inline-end: calc(var(--size-50) / 2);
+      grid-area: form-exp-date;
+    }
+
+    &:nth-child(4) {
+      margin-inline-start: calc(var(--size-50) / 2);
+      grid-area: form-cvc;
+    }
+  }
+
+  &-label,
+  &-input {
+    flex-basis: 100%;
+  }
+
+  &-label {
+    font-size: var(--fs-xs);
+    margin-block-end: var(--size-20);
+  }
+
+  &-input {
+    border: var(--size-px) solid var(--clr-primary-900);
+    border-radius: var(--size-20);
+    color: var(--clr-primary-100);
+    margin-block-end: var(--size-5);
+    max-width: 100%;
+    padding: var(--size-30) var(--size-40);
+
+    // https://stackoverflow.com/questions/5706963/possible-to-use-border-radius-together-with-a-border-image-which-has-a-gradient
+    // @alphazwest
+    &:focus-visible {
+      background-clip: padding-box, border-box;
+      background-image: linear-gradient(var(--clr-white), var(--clr-white)), 
+                        linear-gradient(164deg, var(--clr-secondary-600) 5%, var(--clr-secondary-300) 89%);
+      background-origin: border-box;
+      border: var(--size-px) solid transparent;
+      border-radius: var(--size-20);
+      outline: none;
+    }
+
+    &::placeholder {
+      color: var(--clr-primary-100);
+      opacity: 0.25;
+    }
+
+    &[data-variation="half-width"] {
+      flex-basis: calc(50% - var(--size-25) / 2);
+      max-width: calc(50% - var(--size-25) / 2);
+    }
+
+    &[data-state="has-error"] {
+
+      &:not(:focus-visible) {
+        /*
+        animation-duration: var(--speed-faster);
+        animation-name: shake;
+        */
+        border-color: var(--clr-error-700);
+      }
+    }
+
+    & + & {
+      margin-inline-start: var(--size-25);
+    }
+  }
+}
+
+.error {
+  &-message {
+    color: var(--clr-error-700);
+    font-size: var(--fs-xs);
+
+    // https://stackoverflow.com/questions/19347988/make-empty-div-of-one-line-height
+    // @BoltClock
+    &:empty::before {
+      content: "\00a0";
+    }
+  }
+}
+
+.acknowledgement {
+  &-container {
+    --flow-space: var(--size-20);
+
+    margin-bottom: var(--size-80);
+    position: relative;
+    text-align: center;
+
+    &::before {
+      aspect-ratio: 1;
+      background-image: url(/images/icon-complete.svg);
+      background-repeat: no-repeat;
+      content: "";
+      height: var(--size-200);
+      position: absolute;
+      top: 0;
+      left: 50%;
+      translate: -50% 0;
+      width: var(--size-200);
+    }
+  }
+
+  &-title {
+    font-size: var(--fs-4xl);
+    padding-block-start: var(--size-280);
+  }
+
+  &-message {
+    color: var(--clr-primary-600);
+  }
+}
+
+.button {
+  border-radius: var(--size-20);
+
+  &-action {
+    background-color: var(--clr-primary-100);
+    color: var(--clr-white);
+    padding: var(--size-35);
+    transition: background-color var(--speed-fastest);
+    width: 100%;
+  }
+
+  &:hover {
+    background-color: var(--clr-secondary-300);
+  }
+}
+
+/*
+@include prefix.keyframes-with-webkit(shake) {
+  from,
+  to {
+    translate: 0 0;
+  }
+
+  10%,
+  30%,
+  50%,
+  70%,
+  90% {
+    translate: -0.625rem 0;
+  }
+
+  20%,
+  40%,
+  60%,
+  80% {
+    translate: 0.625rem 0;
+  }
+}
+*/
