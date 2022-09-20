@@ -13,6 +13,11 @@ const CONTAINERS = [
   },
 ] as const
 
+const ANIMATIONS = {
+  FADE_IN_DOWN: 'fade-in-down',
+  FADE_OUT_UP: 'fade-out-up',
+} as const
+
 const ERROR_MESSAGES = {
   REQUIRED: `Can't be blank`,
   NUMBER: 'Wrong format, numbers only',
@@ -56,7 +61,7 @@ const allFocusables: NodeListOf<HTMLInputElement | HTMLButtonElement> = document
 
 const resetInput = (input: HTMLInputElement, view?: HTMLElement) => {
   input.value = ''
-  delete input.dataset.meta
+  delete input.dataset.touched
   clearErrors(input)
   if(view) {
     input.id === 'input-number'
@@ -199,25 +204,48 @@ const addEventListeners = () => {
     })
   })
   buttonAction.addEventListener('click', (evt: Event) => {
-    const currentContainer = CONTAINERS.find(container => !container.element.dataset.state || container.element.dataset.state !== 'is-hidden') as IContainer
-    const nextContainer = CONTAINERS.find(container => container.element.dataset.state && container.element.dataset.state === 'is-hidden') as IContainer
+    const container = CONTAINERS.find(container => !container.element.dataset.state || container.element.dataset.state !== 'is-hidden') as IContainer
     const button = evt.target as HTMLButtonElement
-    if(currentContainer.element.classList.contains('form-container')) {
+    if(container.element.classList.contains('form-container')) {
       const isAllValid = validateAllInputs()
       if(isAllValid) {
-        switchInteractionContainer(currentContainer, nextContainer, button)
+        switchInteractionContainer(container.element, button)
       }
     } else {
       resetAllInputs()
-      switchInteractionContainer(currentContainer, nextContainer, button)
+      switchInteractionContainer(container.element, button)
     }
+  })
+  CONTAINERS.forEach(container => {
+    container.element.addEventListener('animationend', async (evt: AnimationEvent) => {
+      if(evt.animationName === ANIMATIONS.FADE_OUT_UP) {
+        const current = evt.target as HTMLElement
+        const nextContainer = CONTAINERS.find(container => {
+          return container.element !== current
+        }) as IContainer
+        const [next, nextButtonText] = [nextContainer.element, nextContainer.buttonText]
+        current.dataset.state = 'is-hidden'
+        buttonAction.dataset.state = 'is-hidden'
+        await delay(500)
+        console.log(evt)
+        delete current.dataset.animated
+        buttonAction.textContent = nextButtonText
+        delete next.dataset.state
+        delete buttonAction.dataset.state
+        next.dataset.animated = ANIMATIONS.FADE_IN_DOWN
+        buttonAction.dataset.animated = ANIMATIONS.FADE_IN_DOWN
+      }
+    })
   })
 }
 
-const switchInteractionContainer = (currentContainer: IContainer, nextContainer: IContainer, button: HTMLButtonElement) => {
-  delete nextContainer.element.dataset.state
-  currentContainer.element.dataset.state = 'is-hidden'
-  button.textContent = nextContainer.buttonText
+const delay = (ms: number) => {
+  return new Promise(resolve => setTimeout(resolve, ms))
+}
+
+const switchInteractionContainer = (containerElement: HTMLElement, button: HTMLButtonElement) => {
+  containerElement.dataset.animated = ANIMATIONS.FADE_OUT_UP
+  button.dataset.animated = ANIMATIONS.FADE_OUT_UP
 }
 
 const valFormat = (input: HTMLInputElement) => {

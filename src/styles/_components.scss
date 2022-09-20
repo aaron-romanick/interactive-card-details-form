@@ -176,6 +176,18 @@
       margin-inline: 0;
       padding: 0;
     }
+
+    [data-animated] {
+      animation-duration: var(--speed-faster);
+    }
+
+    [data-animated="fade-in-down"] {
+      animation-name: fade-in-down;
+    }
+
+    [data-animated="fade-out-up"] {
+      animation-name: fade-out-up;
+    }
   }
 }
 
@@ -191,11 +203,6 @@
       "form-exp-date form-cvc";
     grid-template-columns: 50% 50%;
     margin-bottom: var(--size-30);
-
-    &[data-animated="fade-out-up"] {
-      animation-name: fade-out-up;
-      animation-duration: var(--speed-faster);
-    }
   }
 
   &-control {
@@ -342,6 +349,18 @@
 
   to {
     opacity: 0;
-    translate: 0 -100%;
+    translate: 0 calc(var(--size-140) * -1);
+  }
+}
+
+@include prefix.keyframes-with-webkit(fade-in-down) {
+  from {
+    opacity: 0;
+    translate: 0 calc(var(--size-140) * -1);
+  }
+
+  to {
+    opacity: 1;
+    translate: 0 0;
   }
 }
