@@ -7,7 +7,7 @@
     background-image: linear-gradient(var(--clr-white), var(--clr-white)),
                       url(/images/bg-main-mobile.png);
     background-position: bottom center, top center;
-    background-repeat: no-repeat;
+    background-repeat: repeat-x, no-repeat;
     background-size: auto calc(100% - 15rem), cover;
     display: flex;
     flex-direction: column;
@@ -19,6 +19,7 @@
       background-image: linear-gradient(var(--clr-white), var(--clr-white)),
                         url(/images/bg-main-desktop.png);
       background-position: right center, left center;
+      background-repeat: repeat-y, no-repeat;
       background-size: calc(50% + 15rem), cover;
       gap: 35rem;
       flex-direction: row;
@@ -190,6 +191,11 @@
       "form-exp-date form-cvc";
     grid-template-columns: 50% 50%;
     margin-bottom: var(--size-30);
+
+    &[data-animated="fade-out-up"] {
+      animation-name: fade-out-up;
+      animation-duration: var(--speed-faster);
+    }
   }
 
   &-control {
@@ -258,10 +264,6 @@
     &[data-state="has-error"] {
 
       &:not(:focus-visible) {
-        /*
-        animation-duration: var(--speed-faster);
-        animation-name: shake;
-        */
         border-color: var(--clr-error-700);
       }
     }
@@ -333,26 +335,13 @@
   }
 }
 
-/*
-@include prefix.keyframes-with-webkit(shake) {
-  from,
+@include prefix.keyframes-with-webkit(fade-out-up) {
+  from {
+    opacity: 1;
+  }
+
   to {
-    translate: 0 0;
-  }
-
-  10%,
-  30%,
-  50%,
-  70%,
-  90% {
-    translate: -0.625rem 0;
-  }
-
-  20%,
-  40%,
-  60%,
-  80% {
-    translate: 0.625rem 0;
+    opacity: 0;
+    translate: 0 -100%;
   }
 }
-*/
