@@ -1,5 +1,5 @@
 export interface ICardElement {
-  view?: HTMLElement,
+  view: HTMLElement,
   input: HTMLInputElement,
 }
 
