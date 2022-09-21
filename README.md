@@ -34,7 +34,7 @@ Users should be able to:
 
 ### <a name="links"></a>Links
 
-- Solution URL: [https://www.frontendmentor.io/solutions/expenses-chart-component-solution-using-typescript-and-css-grid-VslA4kNq-Q](https://www.frontendmentor.io/solutions/expenses-chart-component-solution-using-typescript-and-css-grid-VslA4kNq-Q)
+- Solution URL: [https://www.frontendmentor.io/solutions/interactive-card-details-form-csstypescript-w-full-form-validation-eCxmYnMMj_](https://www.frontendmentor.io/solutions/interactive-card-details-form-csstypescript-w-full-form-validation-eCxmYnMMj_)
 - Live Site URL: [https://aaron-romanick.github.io/interactive-card-details-form/](https://aaron-romanick.github.io/interactive-card-details-form/)
 
 ## <a name="my-process"></a>My Process
