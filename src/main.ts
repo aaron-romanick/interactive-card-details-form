@@ -30,7 +30,7 @@ const ERROR_MESSAGES = {
   REQUIRED: `Can't be blank`,
   NUMBER: 'Wrong format, numbers only',
   CARD: 'Wrong format, must be valid credit card number',
-  DATE: 'Wrong format, valid date only',
+  DATE: 'Wrong format, valid future date only',
   CVC: 'Wrong format, must be valid CVC',
 } as const
 // Form 'touched' state
@@ -206,6 +206,11 @@ const validateInput = (input: HTMLInputElement) => {
       break
     case(validationSchema.includes('month') && !value.match(/^(?:1[0-2]|0[1-9])$/)):
     case(validationSchema.includes('year') && !value.match(/^[0-9]{2}$/)):
+    case(
+      validationSchema.some(item => ['month', 'year'].includes(item)) &&
+      inputExpMonth.dataset.touched && inputExpYear.dataset.touched &&
+      !isValidFutureDate(+inputExpMonth.value, +inputExpYear.value)
+    ):
       errorMessage = ERROR_MESSAGES.DATE
       break
     case(validationSchema.includes('cvc') && !value.match(/^[0-9]{3}$/)):
@@ -416,6 +421,27 @@ const valFormat = (input: HTMLInputElement) => {
       break
   }
   return formattedVal
+}
+
+/**
+ * Check if input date (both month and year) is a valid
+ * future date
+ * 
+ * @param {number} digits - Number of digits of the year (Between 1 ~ 4)
+ * @returns {number}
+ */
+const isValidFutureDate = (month: number, year: number) => {
+  // Make sure input is a number
+  if(isNaN(month) || isNaN(year)) {
+    return false
+  }
+  // Force year to be after 2000
+  const fullYear = year + 2000
+  // Get date, making sure that it corresponds to the last day of the month
+  const formDateTime = new Date(fullYear, month, 0).getTime()
+  // Compare today's date to input date
+  const nowTime = new Date().getTime()
+  return formDateTime >= nowTime
 }
 
 /**
