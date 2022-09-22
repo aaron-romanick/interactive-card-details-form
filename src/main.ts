@@ -113,6 +113,15 @@ const clearErrors = (input: HTMLInputElement) => {
   // Reset error if no sibling inputs
   if(siblingInputs.length === 0) {
     setErrorMessage(input, '')
+  
+  // Check if sibling inputs are valid
+  } else {
+    Array.from(siblingInputs).forEach(siblingInput => {
+      const isValid = validateInput(siblingInput)
+      if(isValid) {
+        clearErrors(siblingInput)
+      }
+    })
   }
 }
 /**
